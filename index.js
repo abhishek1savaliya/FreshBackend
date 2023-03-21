@@ -7,7 +7,7 @@ const app = express()
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin:"*"
+  origin:"https://main.d36kv7hoeefvni.amplifyapp.com",
 }))
 
 app.use(express.json())
