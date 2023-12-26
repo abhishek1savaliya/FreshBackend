@@ -1,22 +1,24 @@
 const { verifyToken } = require("../utils/jwtAuth");
 
+const AUTH_ERROR_MESSAGE = "Please authenticate using a valid token.";
+
+const sendErrorResponse = (res, message) => {
+    res.status(401).send({ error: message });
+};
+
 const fetchuser = (req, res, next) => {
-    // get the user from the jwt token and add id to req object
-
     const token = req.header('auth-token');
-
     if (!token) {
-        res.status(401).send({ error: ("Please authenticate using a valid token.") })
+        return sendErrorResponse(res, AUTH_ERROR_MESSAGE);
     }
 
     try {
-        const data = verifyToken(token)
+        const data = verifyToken(token);
         req.user = data.user;
-        next()
+        next();
+    } catch (err) {
+        return sendErrorResponse(res, AUTH_ERROR_MESSAGE);
     }
-    catch (err) {
-        res.status(401).send({ error: ("Please authenticate using a valid token.") })
-    }
-}
+};
 
 module.exports = fetchuser;
