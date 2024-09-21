@@ -31,4 +31,3 @@ app.listen(port, () => {
   console.log(`iNotebook Backend listening on port ${port}`);
   keepServerAlive();
 });
-});
