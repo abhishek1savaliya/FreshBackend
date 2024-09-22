@@ -13,9 +13,25 @@ app.use(morgan('tiny'))
 
 function keepServerAlive() {
     console.log('Keeping the server alive...');
+    let x = 0;
+
+    const fetchActivationPatch = async () => {
+        try {
+            const response = await fetch('https://anotebookbackend.onrender.com/activate');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            console.log(x++)
+
+        } catch (error) {
+            console.error('Error fetching activation patch:', error);
+        }
+    };
+
+
     setInterval(() => {
-        console.log('.');
-    }, 3000); 
+        fetchActivationPatch();
+    }, 2000);
 }
 
 app.use(cors({
@@ -23,6 +39,15 @@ app.use(cors({
 }));
 
 connection();
+
+app.get('/activate', (req, res) => {
+
+    res.json({
+        data: 'success',
+        message: "Activation patch successfully fetched"
+    })
+
+})
 
 app.use('/api/auth', auth);
 app.use('/api/notes', note);
