@@ -31,7 +31,7 @@ function keepServerAlive() {
 
     setInterval(() => {
         fetchActivationPatch();
-    }, 2000);
+    }, 780000);
 }
 
 app.use(cors({
